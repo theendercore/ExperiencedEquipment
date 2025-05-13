@@ -13,13 +13,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import static com.theendercore.experienced_equipment.ExperiencedEquipment.checkIfShouldCancel;
 
 
-@Mixin(PlayerArmorInvWrapper.class)
+@Mixin(value = PlayerArmorInvWrapper.class, remap = false)
 abstract class PlayerArmorInvWrapperMixin {
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract Inventory getInventoryPlayer();
 
-    @ModifyExpressionValue(method = "insertItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;canEquip(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/entity/Entity;)Z"))
+    @ModifyExpressionValue(method = "insertItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;canEquip(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/entity/Entity;)Z", remap = false), remap = false)
     boolean modifyItemInsertion(boolean original, int slot, ItemStack item, @Local EquipmentSlot eqSlot) {
         if (original) {
             if (eqSlot.isArmor() && checkIfShouldCancel(getInventoryPlayer().player, item.getItem())) return false;

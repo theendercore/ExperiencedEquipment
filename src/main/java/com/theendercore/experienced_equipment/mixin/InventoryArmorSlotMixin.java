@@ -14,13 +14,15 @@ import static com.theendercore.experienced_equipment.ExperiencedEquipment.checkI
 
 @Mixin(targets = "net.minecraft.world.inventory.InventoryMenu$1")
 public abstract class InventoryArmorSlotMixin {
-    @Shadow @Final Player val$pOwner;
-    @Shadow @Final EquipmentSlot val$equipmentslot;
+    @Shadow @Final
+    EquipmentSlot val$equipmentslot;
+    @Shadow @Final
+    Player val$p_39708_;
 
     @ModifyReturnValue(method = "mayPlace", at = @At("RETURN"))
     boolean preventSlotPlace(boolean original, ItemStack stack) {
         if (original) {
-            if (val$equipmentslot.isArmor() && checkIfShouldCancel(val$pOwner, stack.getItem())) return false;
+            if (this.val$equipmentslot.isArmor() && checkIfShouldCancel(this.val$p_39708_, stack.getItem())) return false;
         }
         return original;
     }
