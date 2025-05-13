@@ -7,13 +7,14 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.fml.common.Mod
-import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import thedarkcolour.kotlinforforge.forge.runWhenOn
 import kotlin.jvm.optionals.getOrNull
 
 
@@ -33,10 +34,7 @@ object ExperiencedEquipment {
         MOD_BUS.addListener(::onCreateDynReg)
         MOD_BUS.addListener(::dataGen)
 
-        // Client
-        FORGE_BUS.addListener(::onTooltip)
-//        runWhenOn(Dist.CLIENT) {
-//        }
+        runWhenOn(Dist.CLIENT) { FORGE_BUS.addListener(::onTooltip) }
     }
 
     fun Player.tryDrop(item: ItemStack) {
@@ -46,7 +44,8 @@ object ExperiencedEquipment {
     }
 
     @JvmStatic
-    fun canUseCheck(player: Player, item: Item): Boolean {
+    fun checkIfShouldCancel(player: Player, item: Item): Boolean {
+        if (player.isCreative) return false
         val levels = player.level().registryAccess()
             .registry(EQUIPMENT_LEVEL_REGISTRY_KEY).getOrNull()
             ?.find { it.item == item }

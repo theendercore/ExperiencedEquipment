@@ -1,6 +1,6 @@
 package com.theendercore.experienced_equipment
 
-import com.theendercore.experienced_equipment.ExperiencedEquipment.canUseCheck
+import com.theendercore.experienced_equipment.ExperiencedEquipment.checkIfShouldCancel
 import com.theendercore.experienced_equipment.ExperiencedEquipment.tryDrop
 import com.theendercore.experienced_equipment.data.EquipmentLevel
 import com.theendercore.experienced_equipment.data.EquipmentLevel.Companion.EQUIPMENT_LEVEL_REGISTRY_KEY
@@ -23,25 +23,24 @@ import kotlin.jvm.optionals.getOrNull
 @SubscribeEvent(priority = EventPriority.HIGHEST)
 fun onPlayerInteract(event: PlayerInteractEvent) {
     if (event is PlayerInteractEvent.LeftClickBlock || event is PlayerInteractEvent.LeftClickEmpty) return
-    if (canUseCheck(event.entity, event.itemStack.item)) event.isCanceled = true
+    if (checkIfShouldCancel(event.entity, event.itemStack.item)) event.isCanceled = true
 }
 
 @SubscribeEvent(priority = EventPriority.HIGHEST)
 fun onChangeEquipment(event: LivingEquipmentChangeEvent) {
     val player = event.entity
     if (player !is Player) return
-    if (player.isCreative) return
     if (!event.slot.isArmor) return
 
     val item = event.to
-    if (canUseCheck(player, item.item)) player.tryDrop(item)
+    if (checkIfShouldCancel(player, item.item)) player.tryDrop(item)
 }
 
 @SubscribeEvent(priority = EventPriority.HIGHEST)
 fun onXPChange(event: PlayerXpEvent) {
     val player = event.entity
     player.armorSlots.forEach {
-        if (canUseCheck(player, it.item)) player.tryDrop(it)
+        if (checkIfShouldCancel(player, it.item)) player.tryDrop(it)
     }
 }
 
@@ -61,7 +60,6 @@ fun commandEvent(event: RegisterCommandsEvent) {
             val (item, levels) = holder.get()
             player.sendSystemMessage(Component.literal("${holder.key().location()} - [ $item : $levels ]"), false)
         }
-
         1
     }.build()
     event.dispatcher.root.addChild(root)

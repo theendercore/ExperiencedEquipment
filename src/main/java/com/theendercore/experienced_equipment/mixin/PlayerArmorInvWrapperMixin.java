@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-import static com.theendercore.experienced_equipment.ExperiencedEquipment.canUseCheck;
+import static com.theendercore.experienced_equipment.ExperiencedEquipment.checkIfShouldCancel;
 
 
 @Mixin(PlayerArmorInvWrapper.class)
@@ -22,7 +22,7 @@ abstract class PlayerArmorInvWrapperMixin {
     @ModifyExpressionValue(method = "insertItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;canEquip(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/entity/Entity;)Z"))
     boolean modifyItemInsertion(boolean original, int slot, ItemStack item, @Local EquipmentSlot eqSlot) {
         if (original) {
-            if (eqSlot.isArmor() && canUseCheck(getInventoryPlayer().player, item.getItem())) return false;
+            if (eqSlot.isArmor() && checkIfShouldCancel(getInventoryPlayer().player, item.getItem())) return false;
         }
         return original;
     }

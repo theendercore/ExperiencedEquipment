@@ -19,5 +19,4 @@ data class EquipmentLevel(val item: Item, val levels: Int) {
         val EQUIPMENT_LEVEL_REGISTRY_KEY: ResourceKey<Registry<EquipmentLevel>> =
             ResourceKey.createRegistryKey(ExperiencedEquipment.id("equipment_level"))
     }
-
 }
