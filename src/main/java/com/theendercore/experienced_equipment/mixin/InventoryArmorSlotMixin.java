@@ -14,9 +14,9 @@ import static com.theendercore.experienced_equipment.ExperiencedEquipment.checkI
 
 @Mixin(targets = "net.minecraft.world.inventory.InventoryMenu$1")
 public abstract class InventoryArmorSlotMixin {
-    @Shadow @Final
+    @Shadow(remap = false) @Final
     EquipmentSlot val$equipmentslot;
-    @Shadow @Final
+    @Shadow(remap = false) @Final
     Player val$p_39708_;
 
     @ModifyReturnValue(method = "mayPlace", at = @At("RETURN"))
