@@ -12,13 +12,14 @@ displayName="${mod_name}"
 #credits="The ExampleMod dev team"
 authors="${mod_authors}"
 description='''${mod_description}'''
-[[dependencies.${mod_id}]]
+logoFile="icon.png"
+[[dependencies."${mod_id}"]]
     modId="forge"
     mandatory=true
     versionRange="[46,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.${mod_id}]]
+[[dependencies."${mod_id}"]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.20,1.21)"
