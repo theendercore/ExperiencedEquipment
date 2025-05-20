@@ -6,8 +6,7 @@
   "refmap": "experienced_equipment.refmap.json",
   "mixins": [
     "InventoryArmorSlotMixin",
-    "InventoryMenuMixin",
-    "PlayerArmorInvWrapperMixin"
+    "InventoryMenuMixin"
   ],
   "client": [
   ],
