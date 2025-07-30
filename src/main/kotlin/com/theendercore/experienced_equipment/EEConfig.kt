@@ -18,6 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.IForgeRegistry
 import java.awt.Color
 
+@Suppress("DEPRECATION")
 class EEConfig : Config(id(ID)) {
 
     var equipmentMap = ValidatedMap.Builder<ResourceLocation, Int>()
@@ -37,7 +38,7 @@ class EEConfig : Config(id(ID)) {
     companion object {
         fun <T : Any> ofForge(registry: IForgeRegistry<T>): ValidatedIdentifier = ValidatedIdentifier(
             registry.defaultKey ?: ResourceLocation.fromNamespaceAndPath("empty", "empty"),
-            AllowableIdentifiers({ id -> registry.containsKey(id) }, { registry.keys.toList() }, false)
+            AllowableIdentifiers({ id -> registry.containsKey(id) }, { registry.keys.toList() }, true)
         )
 
         var DEFAULTS = mapOf(
