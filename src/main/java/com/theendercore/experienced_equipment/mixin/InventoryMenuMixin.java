@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import static com.theendercore.experienced_equipment.ExperiencedEquipment.checkIfShouldCancel;
+import static com.theendercore.experienced_equipment.ExperiencedEquipment.shouldCancelCheck;
 import static net.minecraft.world.entity.EquipmentSlot.Type.ARMOR;
 import static net.minecraft.world.entity.EquipmentSlot.Type.HAND;
 
@@ -19,7 +19,7 @@ public abstract class InventoryMenuMixin {
     @ModifyExpressionValue(method = "quickMoveStack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EquipmentSlot;getType()Lnet/minecraft/world/entity/EquipmentSlot$Type;"))
     EquipmentSlot.Type fixQuickMoveForBlockedItems(EquipmentSlot.Type original, Player player, @Local(ordinal = 1) ItemStack stack) {
         if (original == ARMOR) {
-            if (checkIfShouldCancel(player, stack.getItem())) return HAND;
+            if (shouldCancelCheck(player, stack.getItem())) return HAND;
         }
         return original;
     }

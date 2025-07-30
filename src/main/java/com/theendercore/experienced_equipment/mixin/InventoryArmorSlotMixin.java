@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-import static com.theendercore.experienced_equipment.ExperiencedEquipment.checkIfShouldCancel;
+import static com.theendercore.experienced_equipment.ExperiencedEquipment.shouldCancelCheck;
 
 
 @Mixin(targets = "net.minecraft.world.inventory.InventoryMenu$1")
@@ -22,7 +22,7 @@ public abstract class InventoryArmorSlotMixin {
     @ModifyReturnValue(method = "mayPlace", at = @At("RETURN"))
     boolean preventSlotPlace(boolean original, ItemStack stack) {
         if (original) {
-            if (this.val$equipmentslot.isArmor() && checkIfShouldCancel(this.val$p_39708_, stack.getItem())) return false;
+            if (this.val$equipmentslot.isArmor() && shouldCancelCheck(this.val$p_39708_, stack.getItem())) return false;
         }
         return original;
     }

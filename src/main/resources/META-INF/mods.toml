@@ -25,3 +25,9 @@ logoFile="icon.png"
     versionRange="[1.20,1.21)"
     ordering="NONE"
     side="BOTH"
+[[dependencies."${mod_id}"]]
+    modId="fzzy_config"
+    mandatory=true
+    versionRange="[0.7.1,)"
+    ordering="NONE"
+    side="BOTH"

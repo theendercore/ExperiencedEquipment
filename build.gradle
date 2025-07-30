@@ -88,6 +88,10 @@ repositories {
         url = 'https://thedarkcolour.github.io/KotlinForForge/'
         content { includeGroup "thedarkcolour" }
     }
+    maven {
+        name = "FzzyMaven"
+        url = uri("https://maven.fzzyhmstrs.me/")
+    }
 }
 
 dependencies {
@@ -95,6 +99,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:$minecraft_version-$forge_version"
 
     implementation "thedarkcolour:kotlinforforge:$kff_version"
+
+    implementation "me.fzzyhmstrs:fzzy_config:$fzzy_config_version"
 
     annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
 
