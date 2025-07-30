@@ -21,7 +21,7 @@ import java.awt.Color
 @Suppress("DEPRECATION")
 class EEConfig : Config(id(ID)) {
 
-    var equipmentMap = ValidatedMap.Builder<ResourceLocation, Int>()
+    var equipmentLevels = ValidatedMap.Builder<ResourceLocation, Int>()
         .keyHandler(ofForge(ForgeRegistries.ITEMS))
         .valueHandler(ValidatedInt(16, 1024, 1, WidgetType.TEXTBOX_WITH_BUTTONS))
         .defaults(DEFAULTS.mapKeys { it.key.builtInRegistryHolder().key().location() })
@@ -33,7 +33,7 @@ class EEConfig : Config(id(ID)) {
     @NonSync
     var tooltipColor = ValidatedColor(Color(ChatFormatting.RED.color!!), false)
 
-    fun getLevels(item: Item): Int? = equipmentMap[item.builtInRegistryHolder().key().location()]
+    fun getLevels(item: Item): Int? = equipmentLevels[item.builtInRegistryHolder().key().location()]
 
     companion object {
         fun <T : Any> ofForge(registry: IForgeRegistry<T>): ValidatedIdentifier = ValidatedIdentifier(
