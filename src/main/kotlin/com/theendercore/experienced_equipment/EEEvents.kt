@@ -3,7 +3,6 @@ package com.theendercore.experienced_equipment
 import com.theendercore.experienced_equipment.ExperiencedEquipment.CONFIG
 import com.theendercore.experienced_equipment.ExperiencedEquipment.shouldCancelCheck
 import com.theendercore.experienced_equipment.ExperiencedEquipment.tryDrop
-import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Player
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent
@@ -40,9 +39,11 @@ fun onXPChange(event: PlayerXpEvent) {
 
 // Client
 fun onTooltip(event: ItemTooltipEvent) {
-    val levels = CONFIG.equipmentMap[event.itemStack.item] ?: return
+    if (!CONFIG.renderTooltip) return
+    val levels = CONFIG.getLevels(event.itemStack.item) ?: return
     val canRender = event.entity == null || event.entity!!.experienceLevel < levels
     if (canRender) event.toolTip.add(
-        1, Component.literal("You need to be level $levels to equip this item!").withStyle(ChatFormatting.RED)
+        1, Component.literal("You need to be level $levels to equip this item!")
+            .withStyle { it.withColor(CONFIG.tooltipColor.toInt()) }
     )
 }

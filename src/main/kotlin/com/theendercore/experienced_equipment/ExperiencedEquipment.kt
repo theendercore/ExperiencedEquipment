@@ -38,7 +38,7 @@ object ExperiencedEquipment {
     @JvmStatic
     fun shouldCancelCheck(player: Player, item: Item): Boolean {
         if (player.isCreative) return false
-        val levels = CONFIG.equipmentMap[item] ?: return false
+        val levels = CONFIG.getLevels(item) ?: return false
         return player.experienceLevel < levels
     }
 }
